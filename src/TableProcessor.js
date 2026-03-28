@@ -604,7 +604,9 @@ class TableProcessor {
 			this.headerRepeatable = writer.currentBlockToRepeatable();
 		}
 
-		if (this._isCurrentRowUnbreakable) {
+		const shouldCommitCurrentRowUnbreakable = this.dontBreakRows && (rowIndex === 0 || this._isCurrentRowUnbreakable);
+
+		if (shouldCommitCurrentRowUnbreakable) {
 			const pageChangedCallback = () => {
 				if (rowIndex > 0 && !this.headerRows && this.layout.hLineWhenBroken !== false) {
 					// Draw the top border of the row after a page break
